@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoWaste — Smart E-Waste Collection Platform</title>
+<meta name="description" content="Responsible e-waste collection, recycling and marketplace platform for a greener tomorrow.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♻️</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand" onclick="navigateHome()">
+    <div class="nav-logo">♻️</div>
+    <span class="nav-title">Eco<span>Waste</span></span>
+  </div>
+
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-links" id="nav-links">
+    <button class="nav-link" onclick="App.navigate('marketplace')">Marketplace</button>
+
+    <div id="nav-auth" class="nav-auth-group">
+      <button class="nav-link" onclick="App.navigate('login')">Login</button>
+      <button class="btn btn-primary btn-sm" onclick="App.navigate('register')">Get Started</button>
+    </div>
+
+    <div id="nav-user" class="nav-user-group" style="display:none">
+      <button class="nav-link" id="nav-dashboard-btn" onclick="goToDashboard()">Dashboard</button>
+      <div class="nav-divider"></div>
+      <div class="nav-avatar-wrap" id="nav-avatar-wrap" onclick="toggleUserMenu()">
+        <div class="avatar nav-avatar" id="nav-avatar-text"></div>
+        <span class="nav-username" id="nav-username"></span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-name" id="dropdown-name"></div>
+            <div class="dropdown-role" id="dropdown-role"></div>
+          </div>
+          <hr class="dropdown-divider">
+          <button class="dropdown-item" onclick="closeUserMenu();App.navigate('profile')">
+            <span>👤</span> My Profile
+          </button>
+          <button class="dropdown-item" id="dd-dashboard" onclick="closeUserMenu();goToDashboard()">
+            <span>📊</span> Dashboard
+          </button>
+          <hr class="dropdown-divider">
+          <button class="dropdown-item danger" onclick="Auth.logout()">
+            <span>🚪</span> Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     PAGES CONTAINER
+══════════════════════════════════════════════ -->
+<div class="main-content">
+
+<!-- ════════ HOME ════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">🌿 Responsible E-Waste Management</div>
+        <h1 class="hero-title">
+          Give Your<br>Electronics a<br>
+          <span class="hero-accent">Second Life.</span>
+        </h1>
+        <p class="hero-subtitle">
+          Request free doorstep pickup, buy refurbished electronics, and help reduce toxic e-waste — all in one platform.
+        </p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" onclick="App.navigate('register')">
+            ♻️ Start Recycling Free
+          </button>
+          <button class="btn btn-outline btn-lg" onclick="App.navigate('marketplace')">
+            Browse Marketplace →
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value">2,400+</div>
+            <div class="hero-stat-label">Devices Recycled</div>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">840+</div>
+            <div class="hero-stat-label">Happy Users</div>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">12 T</div>
+            <div class="hero-stat-label">CO₂ Saved</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-cards">
+        <div class="hero-feature-card border-green">
+          <div class="hero-feature-icon green">🚛</div>
+          <div>
+            <div class="hero-feature-title">Free Doorstep Pickup</div>
+            <div class="hero-feature-desc">Schedule a pickup — certified collectors come to you.</div>
+          </div>
+        </div>
+        <div class="hero-feature-card">
+          <div class="hero-feature-icon blue">🛒</div>
+          <div>
+            <div class="hero-feature-title">Refurbished Marketplace</div>
+            <div class="hero-feature-desc">Buy & sell working electronics at fair prices.</div>
+          </div>
+        </div>
+        <div class="hero-feature-card">
+          <div class="hero-feature-icon amber">📊</div>
+          <div>
+            <div class="hero-feature-title">Track Your Impact</div>
+            <div class="hero-feature-desc">See your pickup history and environmental contribution.</div>
+          </div>
+        </div>
+        <!-- Demo login card -->
+        <div class="hero-feature-card demo-card">
+          <div class="demo-label">⚡ Quick Demo</div>
+          <div class="demo-btns">
+            <button class="btn btn-primary btn-sm" onclick="quickLogin('user')">👤 User</button>
+            <button class="btn btn-outline btn-sm" onclick="quickLogin('admin')">🛡 Admin</button>
+            <button class="btn btn-outline btn-sm" onclick="quickLogin('collector')">🚛 Collector</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section how-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Simple Process</div>
+        <h2 class="section-title">How EcoWaste Works</h2>
+        <p class="section-sub">Four easy steps to responsible e-waste disposal</p>
+      </div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">01</div>
+          <div class="step-icon">📝</div>
+          <div class="step-title">Register Free</div>
+          <div class="step-desc">Create your account in under a minute. No credit card required.</div>
+        </div>
+        <div class="how-arrow">→</div>
+        <div class="how-step">
+          <div class="step-num">02</div>
+          <div class="step-icon">📍</div>
+          <div class="step-title">Request Pickup</div>
+          <div class="step-desc">Tell us what you have and where you are. We'll take it from there.</div>
+        </div>
+        <div class="how-arrow">→</div>
+        <div class="how-step">
+          <div class="step-num">03</div>
+          <div class="step-icon">🚛</div>
+          <div class="step-title">We Collect</div>
+          <div class="step-desc">A certified collector picks up from your door at your convenience.</div>
+        </div>
+        <div class="how-arrow">→</div>
+        <div class="how-step">
+          <div class="step-num">04</div>
+          <div class="step-icon">🌍</div>
+          <div class="step-title">Impact Made</div>
+          <div class="step-desc">Your device is recycled or refurbished responsibly. Earth thanks you.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo" style="width:32px;height:32px;font-size:16px">♻️</div>
+        <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;">EcoWaste</span>
+      </div>
+      <div class="footer-copy">© 2025 EcoWaste. Making e-waste a thing of the past.</div>
+      <div class="footer-links">
+        <button class="footer-link" onclick="App.navigate('marketplace')">Marketplace</button>
+        <button class="footer-link" onclick="App.navigate('register')">Register</button>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════════ LOGIN ════════ -->
+<div id="page-login" class="page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-icon">♻️</div>
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-sub">Sign in to your EcoWaste account</p>
+
+      <div id="login-alert" class="form-alert" style="display:none"></div>
+
+      <form id="login-form" onsubmit="event.preventDefault();doLogin()">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input id="login-email" type="email" class="form-input" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-with-icon">
+            <input id="login-pass" type="password" class="form-input" placeholder="••••••••" autocomplete="current-password" required>
+            <button type="button" class="input-icon-btn" onclick="togglePwd('login-pass',this)" tabindex="-1">👁</button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top:8px">Sign In →</button>
+      </form>
+
+      <div class="auth-divider"><span>or</span></div>
+      <p class="auth-switch">Don't have an account? <button class="link-btn" onclick="App.navigate('register')">Create one free</button></p>
+
+      <div class="demo-info">
+        <div class="demo-info-title">Demo accounts</div>
+        <div class="demo-info-row"><span class="demo-role">User</span><span>ravi@mail.com / user123</span></div>
+        <div class="demo-info-row"><span class="demo-role admin">Admin</span><span>admin@ewaste.com / admin123</span></div>
+        <div class="demo-info-row"><span class="demo-role collector">Collector</span><span>priya@mail.com / col123</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ REGISTER ════════ -->
+<div id="page-register" class="page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-icon">🌿</div>
+      <h1 class="auth-title">Join EcoWaste</h1>
+      <p class="auth-sub">Create your free account and start recycling</p>
+
+      <div id="register-alert" class="form-alert" style="display:none"></div>
+
+      <form id="register-form" onsubmit="event.preventDefault();doRegister()">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input id="reg-name" class="form-input" placeholder="Your full name" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input id="reg-email" type="email" class="form-input" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-with-icon">
+            <input id="reg-pass" type="password" class="form-input" placeholder="Min 6 characters" required>
+            <button type="button" class="input-icon-btn" onclick="togglePwd('reg-pass',this)" tabindex="-1">👁</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <input id="reg-confirm" type="password" class="form-input" placeholder="Repeat password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top:8px">Create Account →</button>
+      </form>
+
+      <div class="auth-divider"><span>or</span></div>
+      <p class="auth-switch">Already have an account? <button class="link-btn" onclick="App.navigate('login')">Sign in</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ USER DASHBOARD ════════ -->
+<div id="page-dashboard" class="page">
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar-dashboard">
+      <div class="sidebar-inner">
+        <div class="sidebar-section">
+          <div class="sidebar-label">Main</div>
+          <button class="sidebar-item active" data-sid="dashboard" onclick="setSidebarActive(this,'dashboard');App.navigate('dashboard')">
+            <span class="si-icon">📊</span><span>Overview</span>
+          </button>
+          <button class="sidebar-item" data-sid="pickup" onclick="setSidebarActive(this,'dashboard');App.navigate('pickup')">
+            <span class="si-icon">🚛</span><span>Request Pickup</span>
+          </button>
+          <button class="sidebar-item" data-sid="my-requests" onclick="setSidebarActive(this,'dashboard');App.navigate('my-requests')">
+            <span class="si-icon">📋</span><span>My Requests</span>
+            <span class="si-badge" id="sb-pending-count"></span>
+          </button>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">Marketplace</div>
+          <button class="sidebar-item" data-sid="marketplace" onclick="setSidebarActive(this,'dashboard');App.navigate('marketplace')">
+            <span class="si-icon">🛒</span><span>Browse</span>
+          </button>
+          <button class="sidebar-item" data-sid="sell" onclick="setSidebarActive(this,'dashboard');App.navigate('sell')">
+            <span class="si-icon">💰</span><span>Sell a Device</span>
+          </button>
+          <button class="sidebar-item" data-sid="my-listings" onclick="setSidebarActive(this,'dashboard');App.navigate('my-listings')">
+            <span class="si-icon">🏷️</span><span>My Listings</span>
+          </button>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">Account</div>
+          <button class="sidebar-item" onclick="App.navigate('profile')">
+            <span class="si-icon">👤</span><span>Profile</span>
+          </button>
+        </div>
+        <div class="sidebar-footer">
+          <button class="sidebar-item danger" onclick="Auth.logout()">
+            <span class="si-icon">🚪</span><span>Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+    <div class="app-body">
+      <div class="page-header">
+        <div>
+          <div class="page-eyebrow">User Dashboard</div>
+          <h1 class="page-title">Hello, <span id="dash-name" class="text-green">User</span> 👋</h1>
+          <p class="page-subtitle">Here's your e-waste activity overview.</p>
+        </div>
+        <button class="btn btn-primary" onclick="App.navigate('pickup')">+ New Pickup</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card" onclick="App.navigate('my-requests')" style="cursor:pointer">
+          <div class="stat-top"><div class="stat-icon-wrap green">📦</div><div class="stat-trend up" id="stat-trend-total"></div></div>
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-label">Total Pickups</div>
+        </div>
+        <div class="stat-card amber" onclick="App.navigate('my-requests')" style="cursor:pointer">
+          <div class="stat-top"><div class="stat-icon-wrap amber">⏳</div></div>
+          <div class="stat-value" id="stat-pending">0</div>
+          <div class="stat-label">Pending</div>
+        </div>
+        <div class="stat-card" onclick="App.navigate('my-requests')" style="cursor:pointer">
+          <div class="stat-top"><div class="stat-icon-wrap green">✅</div></div>
+          <div class="stat-value" id="stat-collected">0</div>
+          <div class="stat-label">Collected</div>
+        </div>
+        <div class="stat-card blue" onclick="App.navigate('my-listings')" style="cursor:pointer">
+          <div class="stat-top"><div class="stat-icon-wrap blue">🛒</div></div>
+          <div class="stat-value" id="stat-products">0</div>
+          <div class="stat-label">Listed Items</div>
+        </div>
+      </div>
+
+      <div class="quick-actions-grid">
+        <div class="quick-card" onclick="App.navigate('pickup')">
+          <div class="qc-icon">🚛</div>
+          <div class="qc-title">Request Pickup</div>
+          <div class="qc-desc">Schedule free doorstep collection</div>
+          <div class="qc-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="App.navigate('sell')">
+          <div class="qc-icon">💰</div>
+          <div class="qc-title">Sell a Device</div>
+          <div class="qc-desc">List working electronics for sale</div>
+          <div class="qc-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="App.navigate('marketplace')">
+          <div class="qc-icon">🛒</div>
+          <div class="qc-title">Marketplace</div>
+          <div class="qc-desc">Find refurbished electronics</div>
+          <div class="qc-arrow">→</div>
+        </div>
+        <div class="quick-card" onclick="App.navigate('my-requests')">
+          <div class="qc-icon">📋</div>
+          <div class="qc-title">Track Requests</div>
+          <div class="qc-desc">View all your pickup statuses</div>
+          <div class="qc-arrow">→</div>
+        </div>
+      </div>
+
+      <!-- Recent activity -->
+      <div class="content-card" style="margin-top:1.5rem">
+        <div class="content-card-header">
+          <h3 class="content-card-title">Recent Pickups</h3>
+          <button class="btn btn-outline btn-sm" onclick="App.navigate('my-requests')">View All</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Item</th><th>Category</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody id="dash-recent-pickups"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ PICKUP REQUEST ════════ -->
+<div id="page-pickup" class="page">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-section">
+          <button class="sidebar-item" onclick="App.navigate('dashboard')"><span class="si-icon">⬅</span><span>Back to Dashboard</span></button>
+          <button class="sidebar-item active" onclick="App.navigate('pickup')"><span class="si-icon">🚛</span><span>Request Pickup</span></button>
+          <button class="sidebar-item" onclick="App.navigate('my-requests')"><span class="si-icon">📋</span><span>My Requests</span></button>
+        </div>
+        <div class="sidebar-footer"><button class="sidebar-item danger" onclick="Auth.logout()"><span class="si-icon">🚪</span><span>Sign Out</span></button></div>
+      </div>
+    </aside>
+    <div class="app-body">
+      <div class="page-header">
+        <div>
+          <div class="page-eyebrow">Recycling</div>
+          <h1 class="page-title">Request a Pickup</h1>
+          <p class="page-subtitle">Fill in the details and we'll assign a certified collector to your location.</p>
+        </div>
+        <button class="btn btn-outline" onclick="App.navigate('my-requests')">📋 View My Requests</button>
+      </div>
+      <div class="two-col-layout">
+        <div class="content-card">
+          <div id="pickup-alert" class="form-alert" style="display:none"></div>
+          <form id="pickup-form" onsubmit="event.preventDefault();doPickup()">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Device / Item <span class="req">*</span></label>
+                <input id="pickup-item" class="form-input" placeholder="e.g. Old Laptop, Broken Phone" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Category <span class="req">*</span></label>
+                <select id="pickup-category" class="form-select" required>
+                  <option value="">Select category</option>
+                  <option>Laptop</option><option>Mobile</option><option>Monitor</option>
+                  <option>Printer</option><option>Camera</option><option>TV</option>
+                  <option>Refrigerator</option><option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Quantity</label>
+              <input id="pickup-qty" type="number" class="form-input" placeholder="1" min="1" max="20" value="1">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pickup Address <span class="req">*</span></label>
+              <textarea id="pickup-address" class="form-textarea" placeholder="Full address including landmark, city, pincode" required></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Additional Notes</label>
+              <input id="pickup-notes" class="form-input" placeholder="Device condition, floor number, gate code…">
+            </div>
+            <div class="notice-box green">
+              ♻️ <strong>Free Service</strong> — Pickup is completely free. We responsibly recycle or refurbish your devices.
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-lg">🚛 Submit Pickup Request</button>
+              <button type="button" class="btn btn-outline btn-lg" onclick="App.navigate('dashboard')">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div>
+          <div class="content-card info-sidebar">
+            <h3 class="info-title">How it works</h3>
+            <div class="info-steps">
+              <div class="info-step"><span class="info-step-num">1</span><div><strong>Submit</strong> — Fill this form with your item details.</div></div>
+              <div class="info-step"><span class="info-step-num">2</span><div><strong>Assigned</strong> — A collector is assigned within 24 hours.</div></div>
+              <div class="info-step"><span class="info-step-num">3</span><div><strong>Pickup</strong> — They visit your location and collect the device.</div></div>
+              <div class="info-step"><span class="info-step-num">4</span><div><strong>Recycled</strong> — Device is responsibly processed.</div></div>
+            </div>
+            <hr class="card-divider">
+            <div class="info-contact">📞 Support: <strong>1800-ECO-WASTE</strong><br>⏰ Mon–Sat, 9 AM – 6 PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ MY REQUESTS ════════ -->
+<div id="page-my-requests" class="page">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-section">
+          <button class="sidebar-item" onclick="App.navigate('dashboard')"><span class="si-icon">⬅</span><span>Back to Dashboard</span></button>
+          <button class="sidebar-item" onclick="App.navigate('pickup')"><span class="si-icon">🚛</span><span>Request Pickup</span></button>
+          <button class="sidebar-item active"><span class="si-icon">📋</span><span>My Requests</span></button>
+        </div>
+        <div class="sidebar-footer"><button class="sidebar-item danger" onclick="Auth.logout()"><span class="si-icon">🚪</span><span>Sign Out</span></button></div>
+      </div>
+    </aside>
+    <div class="app-body">
+      <div class="page-header">
+        <div>
+          <div class="page-eyebrow">History</div>
+          <h1 class="page-title">My Pickup Requests</h1>
+          <p class="page-subtitle">Track all your e-waste pickup requests.</p>
+        </div>
+        <button class="btn btn-primary" onclick="App.navigate('pickup')">+ New Request</button>
+      </div>
+      <div class="content-card">
+        <div class="table-toolbar">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input class="form-input search-input" id="req-search" placeholder="Search requests…" oninput="filterMyRequests()">
+          </div>
+          <select class="form-select filter-select" id="req-status-filter" onchange="filterMyRequests()">
+            <option value="">All Status</option>
+            <option>Pending</option><option>Assigned</option><option>Collected</option><option>Cancelled</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Item</th><th>Category</th><th>Address</th><th>Status</th><th>Date</th><th>Action</th></tr>
+            </thead>
+            <tbody id="my-requests-table"></tbody>
+          </table>
+        </div>
+        <div class="table-pagination" id="req-pagination"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ MARKETPLACE ════════ -->
+<div id="page-marketplace" class="page">
+  <div class="container" style="padding-top:5.5rem;padding-bottom:4rem">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Buy & Sell</div>
+        <h1 class="page-title">Marketplace</h1>
+        <p class="page-subtitle">Refurbished electronics at honest prices. Every purchase extends a device's life.</p>
+      </div>
+      <button class="btn btn-primary" onclick="requireLoginThen('sell')">+ List Your Device</button>
+    </div>
+    <div class="market-toolbar">
+      <div class="search-wrap" style="flex:1;max-width:320px">
+        <span class="search-icon">🔍</span>
+        <input id="market-search" class="form-input search-input" placeholder="Search devices…" oninput="Pages.marketplace()">
+      </div>
+      <select id="market-filter" class="form-select filter-select" onchange="Pages.marketplace()">
+        <option value="">All Categories</option>
+        <option>Laptop</option><option>Mobile</option><option>Monitor</option>
+        <option>Printer</option><option>Camera</option><option>TV</option><option>Refrigerator</option><option>Other</option>
+      </select>
+      <select id="market-sort" class="form-select filter-select" onchange="Pages.marketplace()">
+        <option value="newest">Newest First</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+      </select>
+    </div>
+    <div class="product-grid" id="marketplace-grid"></div>
+    <div id="market-pagination" class="table-pagination"></div>
+  </div>
+</div>
+
+<!-- ════════ SELL ITEM ════════ -->
+<div id="page-sell" class="page">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-section">
+          <button class="sidebar-item" onclick="App.navigate('dashboard')"><span class="si-icon">⬅</span><span>Dashboard</span></button>
+          <button class="sidebar-item active"><span class="si-icon">💰</span><span>Sell a Device</span></button>
+          <button class="sidebar-item" onclick="App.navigate('my-listings')"><span class="si-icon">🏷️</span><span>My Listings</span></button>
+          <button class="sidebar-item" onclick="App.navigate('marketplace')"><span class="si-icon">🛒</span><span>Marketplace</span></button>
+        </div>
+        <div class="sidebar-footer"><button class="sidebar-item danger" onclick="Auth.logout()"><span class="si-icon">🚪</span><span>Sign Out</span></button></div>
+      </div>
+    </aside>
+    <div class="app-body">
+      <div class="page-header">
+        <div>
+          <div class="page-eyebrow">Seller</div>
+          <h1 class="page-title">List Your Device</h1>
+          <p class="page-subtitle">Sell working electronics. Listings go live after admin review.</p>
+        </div>
+        <button class="btn btn-outline" onclick="App.navigate('marketplace')">View Marketplace</button>
+      </div>
+      <div class="two-col-layout">
+        <div class="content-card">
+          <div id="sell-alert" class="form-alert" style="display:none"></div>
+          <form id="sell-form" onsubmit="event.preventDefault();doSell()">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Product Name <span class="req">*</span></label>
+                <input id="sell-name" class="form-input" placeholder="e.g. HP Pavilion Laptop i5 8GB" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Category <span class="req">*</span></label>
+                <select id="sell-category" class="form-select" required>
+                  <option value="">Select category</option>
+                  <option>Laptop</option><option>Mobile</option><option>Monitor</option>
+                  <option>Printer</option><option>Camera</option><option>TV</option><option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Asking Price (₹) <span class="req">*</span></label>
+                <input id="sell-price" type="number" class="form-input" placeholder="e.g. 12000" min="1" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Condition <span class="req">*</span></label>
+                <select id="sell-condition" class="form-select" required>
+                  <option value="">Select condition</option>
+                  <option>Like New</option><option>Good</option><option>Fair</option><option>For Parts</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contact Number <span class="req">*</span></label>
+              <input id="sell-contact" class="form-input" placeholder="Your phone number for buyers to reach you" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <textarea id="sell-desc" class="form-textarea" placeholder="Condition, specs, reason for selling, any defects…"></textarea>
+            </div>
+            <div class="notice-box amber">
+              ⚠️ Your listing will be reviewed by our admin team before going live on the marketplace.
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-lg">Submit for Review</button>
+              <button type="button" class="btn btn-outline btn-lg" onclick="App.navigate('dashboard')">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="content-card info-sidebar">
+          <h3 class="info-title">Listing Guidelines</h3>
+          <div class="guideline-list">
+            <div class="guideline-item ok">✅ Only list electronic items</div>
+            <div class="guideline-item ok">✅ Be honest about condition</div>
+            <div class="guideline-item ok">✅ Provide real contact details</div>
+            <div class="guideline-item bad">❌ No prohibited/hazardous items</div>
+            <div class="guideline-item bad">❌ No counterfeit products</div>
+          </div>
+          <hr class="card-divider">
+          <div style="font-size:0.82rem;color:var(--text-muted)">Listings reviewed within 24 hours.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ MY LISTINGS ════════ -->
+<div id="page-my-listings" class="page">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-section">
+          <button class="sidebar-item" onclick="App.navigate('dashboard')"><span class="si-icon">⬅</span><span>Dashboard</span></button>
+          <button class="sidebar-item" onclick="App.navigate('sell')"><span class="si-icon">💰</span><span>Sell a Device</span></button>
+          <button class="sidebar-item active"><span class="si-icon">🏷️</span><span>My Listings</span></button>
+        </div>
+        <div class="sidebar-footer"><button class="sidebar-item danger" onclick="Auth.logout()"><span class="si-icon">🚪</span><span>Sign Out</span></button></div>
+      </div>
+    </aside>
+    <div class="app-body">
+      <div class="page-header">
+        <div>
+          <div class="page-eyebrow">Seller</div>
+          <h1 class="page-title">My Listings</h1>
+          <p class="page-subtitle">Manage all your products listed on the marketplace.</p>
+        </div>
+        <button class="btn btn-primary" onclick="App.navigate('sell')">+ Add New Listing</button>
+      </div>
+      <div class="content-card">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Condition</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+            <tbody id="my-listings-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ PROFILE ════════ -->
+<div id="page-profile" class="page">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-section">
+          <button class="sidebar-item" onclick="goToDashboard()"><span class="si-icon">⬅</span><span>Back</span></button>
+          <button class="sidebar-item active"><span class="si-icon">👤</span><span>Profile</span></button>
+        </div>
+        <div class="sidebar-footer"><button class="sidebar-item danger" onclick="Auth.logout()"><span class="si-icon">🚪</span><span>Sign Out</span></button></div>
+      </div>
+    </aside>
+    <div class="app-body">
+      <div class="page-header">
+        <div>
+          <div class="page-eyebrow">Account</div>
+          <h1 class="page-title">My Profile</h1>
+        </div>
+      </div>
+      <div id="profile-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ ADMIN PANEL ════════ -->
+<div id="page-admin" class="page">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-section">
+          <div class="sidebar-label">Admin Panel</div>
+          <button class="sidebar-item active" data-atab="overview" onclick="renderAdminTab('overview')"><span class="si-icon">📊</span><span>Overview</span></button>
+          <button class="sidebar-item" data-atab="users" onclick="renderAdminTab('users')"><span class="si-icon">👥</span><span>Users</span></button>
+          <button class="sidebar-item" data-atab="pickups" onclick="renderAdminTab('pickups')"><span class="si-icon">🚛</span><span>Pickups</span></button>
+          <button class="sidebar-item" data-atab="products" onclick="renderAdminTab('products')"><span class="si-icon">🛒</span><span>Products</span><span class="si-badge" id="admin-pending-badge"></span></button>
+        </div>
+        <div class="sidebar-footer"><button class="sidebar-item danger" onclick="Auth.logout()"><span class="si-icon">🚪</span><span>Sign Out</span></button></div>
+      </div>
+    </aside>
+    <div class="app-body">
+      <div class="page-header" style="padding-top:0">
+        <div>
+          <div class="page-eyebrow">Administration</div>
+          <h1 class="page-title">Admin Dashboard</h1>
+          <p class="page-subtitle">Manage users, pickups, and marketplace listings.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-outline btn-sm" onclick="exportData()">⬇ Export Data</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid" id="admin-stats-grid">
+        <div class="stat-card" onclick="renderAdminTab('users')" style="cursor:pointer"><div class="stat-top"><div class="stat-icon-wrap blue">👥</div></div><div class="stat-value" id="admin-stat-users">0</div><div class="stat-label">Registered Users</div></div>
+        <div class="stat-card" onclick="renderAdminTab('pickups')" style="cursor:pointer"><div class="stat-top"><div class="stat-icon-wrap green">🚛</div></div><div class="stat-value" id="admin-stat-pickups">0</div><div class="stat-label">Total Pickups</div></div>
+        <div class="stat-card" onclick="renderAdminTab('products')" style="cursor:pointer"><div class="stat-top"><div class="stat-icon-wrap amber">🛒</div></div><div class="stat-value" id="admin-stat-products">0</div><div class="stat-label">Listed Products</div></div>
+        <div class="stat-card red" onclick="renderAdminTab('products')" style="cursor:pointer"><div class="stat-top"><div class="stat-icon-wrap red">⏳</div></div><div class="stat-value" id="admin-stat-pending">0</div><div class="stat-label">Pending Approval</div></div>
+      </div>
+
+      <!-- Tab nav -->
+      <div class="tabs">
+        <button class="tab active" data-atab="overview" onclick="renderAdminTab('overview')">Overview</button>
+        <button class="tab" data-atab="users" onclick="renderAdminTab('users')">Users</button>
+        <button class="tab" data-atab="pickups" onclick="renderAdminTab('pickups')">Pickups</button>
+        <button class="tab" data-atab="products" onclick="renderAdminTab('products')">Products</button>
+      </div>
+
+      <!-- Overview -->
+      <div id="admin-tab-overview" class="tab-content active">
+        <div class="content-card">
+          <h3 class="content-card-title" style="margin-bottom:1rem">Quick Actions</h3>
+          <div class="qactions">
+            <button class="btn btn-primary" onclick="renderAdminTab('products')">Review Pending Products</button>
+            <button class="btn btn-outline" onclick="renderAdminTab('pickups')">Manage Pickups</button>
+            <button class="btn btn-outline" onclick="renderAdminTab('users')">View All Users</button>
+          </div>
+        </div>
+        <div class="content-card" style="margin-top:1rem">
+          <h3 class="content-card-title" style="margin-bottom:1rem">Recent Activity</h3>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Item</th><th>User</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody id="admin-recent-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users -->
+      <div id="admin-tab-users" class="tab-content">
+        <div class="content-card">
+          <div class="table-toolbar">
+            <div class="search-wrap"><span class="search-icon">🔍</span><input class="form-input search-input" id="admin-user-search" placeholder="Search users…" oninput="renderAdminUsers()"></div>
+            <select class="form-select filter-select" id="admin-user-role" onchange="renderAdminUsers()">
+              <option value="">All Roles</option><option>user</option><option>admin</option><option>collector</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Action</th></tr></thead>
+              <tbody id="admin-users-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pickups -->
+      <div id="admin-tab-pickups" class="tab-content">
+        <div class="content-card">
+          <div class="table-toolbar">
+            <div class="search-wrap"><span class="search-icon">🔍</span><input class="form-input search-input" id="admin-pickup-search" placeholder="Search pickups…" oninput="renderAdminPickups()"></div>
+            <select class="form-select filter-select" id="admin-pickup-status" onchange="renderAdminPickups()">
+              <option value="">All Status</option><option>Pending</option><option>Assigned</option><option>Collected</option><option>Cancelled</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Item</th><th>User</th><th>Address</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+              <tbody id="admin-pickups-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div id="admin-tab-products" class="tab-content">
+        <div class="content-card">
+          <div class="table-toolbar">
+            <div class="search-wrap"><span class="search-icon">🔍</span><input class="form-input search-input" id="admin-prod-search" placeholder="Search products…" oninput="renderAdminProducts()"></div>
+            <select class="form-select filter-select" id="admin-prod-status" onchange="renderAdminProducts()">
+              <option value="">All Status</option><option>Pending</option><option>Approved</option><option>Rejected</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Product</th><th>Seller</th><th>Price</th><th>Condition</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="admin-products-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ COLLECTOR PANEL ════════ -->
+<div id="page-collector" class="page">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-section">
+          <div class="sidebar-label">Collector Portal</div>
+          <button class="sidebar-item active" data-ctab="requests" onclick="renderCollectorTab('requests')"><span class="si-icon">📥</span><span>Pending Requests</span><span class="si-badge" id="col-pending-sidebar"></span></button>
+          <button class="sidebar-item" data-ctab="myjobs" onclick="renderCollectorTab('myjobs')"><span class="si-icon">🗂️</span><span>My Jobs</span></button>
+          <button class="sidebar-item" data-ctab="history" onclick="renderCollectorTab('history')"><span class="si-icon">✅</span><span>Completed</span></button>
+        </div>
+        <div class="sidebar-footer"><button class="sidebar-item danger" onclick="Auth.logout()"><span class="si-icon">🚪</span><span>Sign Out</span></button></div>
+      </div>
+    </aside>
+    <div class="app-body">
+      <div class="page-header" style="padding-top:0">
+        <div>
+          <div class="page-eyebrow">Collector Portal</div>
+          <h1 class="page-title">Collection Dashboard</h1>
+          <p class="page-subtitle">Accept and manage your e-waste pickup jobs.</p>
+        </div>
+      </div>
+      <div class="stats-grid" style="margin-bottom:1.5rem">
+        <div class="stat-card amber"><div class="stat-top"><div class="stat-icon-wrap amber">📥</div></div><div class="stat-value" id="col-stat-pending">0</div><div class="stat-label">Available Jobs</div></div>
+        <div class="stat-card blue"><div class="stat-top"><div class="stat-icon-wrap blue">🗂️</div></div><div class="stat-value" id="col-stat-myjobs">0</div><div class="stat-label">My Active Jobs</div></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon-wrap green">✅</div></div><div class="stat-value" id="col-stat-done">0</div><div class="stat-label">Completed</div></div>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-ctab="requests" onclick="renderCollectorTab('requests')">Pending Requests</button>
+        <button class="tab" data-ctab="myjobs" onclick="renderCollectorTab('myjobs')">My Jobs</button>
+        <button class="tab" data-ctab="history" onclick="renderCollectorTab('history')">Completed</button>
+      </div>
+      <div id="col-tab-requests" class="tab-content active">
+        <div class="content-card">
+          <div class="table-wrap">
+            <table class="data-table"><thead><tr><th>Item</th><th>Category</th><th>Address</th><th>Requested</th><th>Action</th></tr></thead>
+            <tbody id="col-requests-table"></tbody></table>
+          </div>
+        </div>
+      </div>
+      <div id="col-tab-myjobs" class="tab-content">
+        <div class="content-card">
+          <div class="table-wrap">
+            <table class="data-table"><thead><tr><th>Item</th><th>Category</th><th>Address</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="col-myjobs-table"></tbody></table>
+          </div>
+        </div>
+      </div>
+      <div id="col-tab-history" class="tab-content">
+        <div class="content-card">
+          <div class="table-wrap">
+            <table class="data-table"><thead><tr><th>Item</th><th>Address</th><th>Completed</th></tr></thead>
+            <tbody id="col-history-table"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main-content -->
+
+<!-- ══════════════════════════
+     MODALS
+══════════════════════════ -->
+<div id="modal-overlay" class="modal-overlay" onclick="closeAllModals()"></div>
+
+<!-- Contact Seller Modal -->
+<div id="modal-contact" class="modal">
+  <div class="modal-header">
+    <h3 class="modal-title">Contact Seller</h3>
+    <button class="modal-close" onclick="closeAllModals()">✕</button>
+  </div>
+  <div class="modal-body" id="modal-contact-body"></div>
+  <div class="modal-footer">
+    <button class="btn btn-outline" onclick="closeAllModals()">Close</button>
+  </div>
+</div>
+
+<!-- Product Detail Modal -->
+<div id="modal-product" class="modal">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-product-title">Product Details</h3>
+    <button class="modal-close" onclick="closeAllModals()">✕</button>
+  </div>
+  <div class="modal-body" id="modal-product-body"></div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" id="modal-product-contact-btn">📞 Contact Seller</button>
+    <button class="btn btn-outline" onclick="closeAllModals()">Close</button>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div id="modal-confirm" class="modal">
+  <div class="modal-header">
+    <h3 class="modal-title">Confirm Action</h3>
+    <button class="modal-close" onclick="closeAllModals()">✕</button>
+  </div>
+  <div class="modal-body">
+    <p id="modal-confirm-msg" style="color:var(--text-secondary)"></p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" id="modal-confirm-ok">Confirm</button>
+    <button class="btn btn-outline" onclick="closeAllModals()">Cancel</button>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container" class="toast-container"></div>
+
+<script src="js/db.js"></script>
+<script src="js/app.js"></script>
+<script src="js/pages.js"></script>
+<script>
+function quickLogin(role) {
+  const creds = {
+    user:      ['ravi@mail.com','user123'],
+    admin:     ['admin@ewaste.com','admin123'],
+    collector: ['priya@mail.com','col123']
+  };
+  const [email, pass] = creds[role];
+  const user = Auth.login(email, pass);
+  if (user) {
+    toast(`Logged in as ${user.name} (${user.role}) 👋`);
+    if (user.role === 'admin') App.navigate('admin');
+    else if (user.role === 'collector') App.navigate('collector');
+    else App.navigate('dashboard');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  DB.init();
+  const user = Auth.current();
+  if (user) {
+    if (user.role === 'admin') App.navigate('admin');
+    else if (user.role === 'collector') App.navigate('collector');
+    else App.navigate('dashboard');
+  } else {
+    App.navigate('home');
+  }
+});
+</script>
+</body>
+</html>
